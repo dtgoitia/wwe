@@ -1,8 +1,13 @@
 require('dotenv').config();
 require('console-stamp')(console, 'HH:MM:ss.l');
 
+import './TogglPromise';
+import { getClients } from './TogglPromise';
+
 const TogglClient = require('toggl-api');
-const t:Object = new TogglClient({ apiToken: process.env.TOGGLE_TOKEN })
+const t = new TogglClient({ apiToken: process.env.TOGGLE_TOKEN })
+
+const clients = await getClients(t);
 /*
 ASYNC
   getClients()
@@ -24,3 +29,4 @@ TogglApi docs:
   http://7eggs.github.io/node-toggl-api/TogglClient.html
 */
 console.log('.a');
+console.log(clients);

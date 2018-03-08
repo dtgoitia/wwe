@@ -1,8 +1,12 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 require('dotenv').config();
 require('console-stamp')(console, 'HH:MM:ss.l');
+require("./TogglPromise");
+const TogglPromise_1 = require("./TogglPromise");
 const TogglClient = require('toggl-api');
 const t = new TogglClient({ apiToken: process.env.TOGGLE_TOKEN });
+const clients = yield TogglPromise_1.getClients(t);
 /*
 ASYNC
   getClients()
@@ -24,4 +28,5 @@ TogglApi docs:
   http://7eggs.github.io/node-toggl-api/TogglClient.html
 */
 console.log('.a');
+console.log(clients);
 //# sourceMappingURL=index.js.map
