@@ -1,0 +1,14 @@
+{
+    "saveAndRun": {
+        "commands": [
+            {
+                "match": "\\.*index.ts$",
+                "cmd": "tsc"
+            },
+            {
+                "match": "\\.*index.ts$",
+                "cmd": "node dist/index.js"
+            }
+        ]
+    }
+}
