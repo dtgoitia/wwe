@@ -1,0 +1,23 @@
+/// <reference types="node" />
+
+
+export = TogglClient;
+
+declare module 'toggl-api' {
+  export class ToggleClient {
+    public authData: any | null;
+    private cookieJar: any | null;
+    private options: any | null;
+    private authTimeout: any | null;
+    private authenticating: any | boolean;
+    constructor(options:Object);
+    static defaultClient(): ToggleClient;
+    static setDefaults(newDefaults: Object):void;
+    private apiRequest(path: string, opts: Object, callback: Function):void;
+    public authenticate(callback: Function):any;
+    public destroy():void;
+    private reportsRequest(path: string, opts: Object, callback: Function): void;
+    private setAuthTimer(duration: number);
+    private validateOptions(schema: Object|String, options: Object, callback: Function): boolean;
+  }
+}

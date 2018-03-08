@@ -2,7 +2,7 @@ require('dotenv').config();
 require('console-stamp')(console, 'HH:MM:ss.l');
 
 const TogglClient = require('toggl-api');
-const t = new TogglClient({ apiToken: process.env.TOGGLE_TOKEN })
+const t:Object = new TogglClient({ apiToken: process.env.TOGGLE_TOKEN })
 /*
 ASYNC
   getClients()
@@ -15,7 +15,7 @@ ASYNC
   getTimeEntries()
   await for projectId array
   filter all the tasks matching projectId
-  calculate the total amount hours spend in the client
+  calculate the total amount hours spend in the client 
 
 ASYNC
   calculate theoretical hours you should have worked until today
