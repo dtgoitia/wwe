@@ -11,6 +11,10 @@ export function MillisecondsToHours(sec: number): number{
   return sec/3600000;
 }
 
+export function MillisecondsToDays(sec: number): number{
+  return sec/(24*3600*1000);
+}
+
 export function TotalHours(data: IEntry[]): number {
   // TODO data argument implement appropiate interface
   // IEntry is provisional
@@ -19,16 +23,28 @@ export function TotalHours(data: IEntry[]): number {
   }).reduce((total:number, h: number) => total + h);
 }
 
-export function EndOfWeek(startDate: Date): Date {
+export function BeginingOfWeek(date: Date): Date {
+  // TODO Update hard coded date
+  return new Date(Date.UTC(2018, 2, 8));
+}
+
+export function EndOfWeek(date: Date): Date {
   // TODO Update hard coded date
   return new Date(Date.UTC(2018, 2, 9));
 }
 
+export function DaysBetweenDates(start: Date, end: Date): number {
+  const timeStart: number = MillisecondsToDays(start.getTime());
+  const timeEnd: number = MillisecondsToDays(end.getTime());
+  return timeEnd - timeStart;
+}
+
 export function HoursToDo(startDate: Date): number {
-  const endDate: Date = EndOfWeek(startDate);
-  const timeStart: number = MillisecondsToHours(startDate.getTime());
-  const timeEnd: number = MillisecondsToHours(endDate.getTime());
-  console.log(timeStart);
-  console.log(timeEnd);
-  return timeEnd-timeStart;
+  const Weekstart: Date = BeginingOfWeek(startDate);
+  const WeekEnd: Date = EndOfWeek(startDate);
+  const days: number = DaysBetweenDates(Weekstart, WeekEnd) + 1;
+  const workingHours: number = 7.5 * days;
+
+  console.log(`workingHours: ${workingHours}`);
+  return workingHours;
 }
