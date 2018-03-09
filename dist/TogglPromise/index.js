@@ -43,16 +43,48 @@ function getClientsPromise(togglClient) {
                 resolve(clients);
             }
             else {
-                reject(new Error("err.message"));
+                reject(new Error(err.message));
             }
         });
     });
 }
 exports.getClientsPromise = getClientsPromise;
-function getClients(togglClient) {
-    return __awaiter(this, void 0, void 0, function* () {
-        return yield getClientsPromise(togglClient);
+function getClientProjectsPromise(toggleClient, clientId, active) {
+    return new Promise((resolve, reject) => {
+        toggleClient.getClientProjects(clientId, active, (err, projects) => {
+            if (!err) {
+                resolve(projects);
+            }
+            else {
+                reject(new Error(err.message));
+            }
+        });
     });
 }
-exports.getClients = getClients;
+exports.getClientProjectsPromise = getClientProjectsPromise;
+// export function getProjectTasksPromise(togglClient:any, projectId: number|string): Promise<any|Error> {
+//   return new Promise((resolve, reject) => {
+//     console.log('getProjectTasksPromise called!')
+//     togglClient.getProjectTasks(projectId, (err: Error, tasks: any) => { // TODO Change task type to ITask
+//       if (!err) {
+//         resolve(tasks);
+//       } else {
+//         reject(new Error(err.message));
+//       }
+//     });
+//   });
+// }
+function getTimeEntriesPromise(togglClient, startDate, endDate) {
+    return new Promise((resolve, reject) => {
+        togglClient.getTimeEntries(startDate, endDate, (err, timeEntries) => {
+            if (!err) {
+                resolve(timeEntries);
+            }
+            else {
+                reject(new Error(err.message));
+            }
+        });
+    });
+}
+exports.getTimeEntriesPromise = getTimeEntriesPromise;
 //# sourceMappingURL=index.js.map

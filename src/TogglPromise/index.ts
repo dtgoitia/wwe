@@ -32,14 +32,51 @@ export function getClientsPromise(togglClient:any): Promise<any|Error> {
   return new Promise((resolve, reject) => {
     togglClient.getClients((err: Error, clients: any) => {
       if (!err) {
-        resolve(clients)
+        resolve(clients);
       } else {
-        reject(new Error("err.message"))
+        reject(new Error(err.message));
       }
     })
   })
 }
 
-export async function getClients(togglClient: any) {
-  return await getClientsPromise(togglClient);
+export function getClientProjectsPromise(toggleClient:any, clientId: number|string, active: string|boolean): Promise<any|Error> {
+  return new Promise((resolve, reject) => {
+    toggleClient.getClientProjects(clientId, active, (err:Error, projects: any) => { // TODO Change project type to IProject
+      if (!err) {
+        resolve(projects);
+      } else {
+        reject(new Error(err.message));
+      }
+    });
+  });
+}
+
+// export function getProjectTasksPromise(togglClient:any, projectId: number|string): Promise<any|Error> {
+//   return new Promise((resolve, reject) => {
+//     console.log('getProjectTasksPromise called!')
+//     togglClient.getProjectTasks(projectId, (err: Error, tasks: any) => { // TODO Change task type to ITask
+//       if (!err) {
+//         resolve(tasks);
+//       } else {
+//         reject(new Error(err.message));
+//       }
+//     });
+//   });
+// }
+
+export function getTimeEntriesPromise(
+  togglClient:any,
+  startDate?:string|number|Date,
+  endDate?:string|number|Date
+): Promise<any|Error> {
+  return new Promise((resolve, reject) => {
+    togglClient.getTimeEntries(startDate, endDate, (err, timeEntries) => {
+      if (!err) {
+        resolve(timeEntries);
+      } else {
+        reject(new Error(err.message));
+      }
+    });
+  });
 }
