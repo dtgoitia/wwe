@@ -1,8 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 require('dotenv').config();
-require('console-stamp')(console, 'HH:MM:ss.l');
+if (process.env.ENV && process.env.ENV.toLocaleLowerCase() === 'test') {
+    // TODO: change "ENV" value in .env file
+    require('console-stamp')(console, 'HH:MM:ss.l');
+}
 require("./TogglPromise");
+const Logic_1 = require("./Logic");
 const TogglPromise_1 = require("./TogglPromise");
 const TogglClient = require('toggl-api');
 const t = new TogglClient({ apiToken: process.env.TOGGLE_TOKEN });
@@ -29,10 +33,12 @@ TogglApi docs:
 // function selectClient;
 let projectIds;
 let taskArray;
-const startDate = new Date(Date.UTC(2018, 1, 5));
+const startDate = new Date(Date.UTC(2018, 2, 5));
 const endDate = new Date();
 function processData(data) {
-    console.log(data);
+    const workedHours = Logic_1.TotalHours(data);
+    console.log(workedHours);
+    Logic_1.HoursToDo(new Date());
     // Join entries that are in the same day and return an array with worked hours per day
 }
 const clients = TogglPromise_1.getClientsPromise(t)

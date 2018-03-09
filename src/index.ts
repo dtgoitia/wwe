@@ -1,7 +1,12 @@
 require('dotenv').config();
-require('console-stamp')(console, 'HH:MM:ss.l');
+if (process.env.ENV && process.env.ENV.toLocaleLowerCase() === 'test') {
+  // TODO: change "ENV" value in .env file
+  require('console-stamp')(console, 'HH:MM:ss.l');
+}
+
 
 import './TogglPromise';
+import { TotalHours, HoursToDo } from './Logic';
 import {
   getClientsPromise,
   getClientProjectsPromise,
@@ -37,12 +42,15 @@ TogglApi docs:
 let projectIds;
 let taskArray;
 
-const startDate = new Date(Date.UTC(2018, 1, 5))
+const startDate = new Date(Date.UTC(2018, 2, 5))
 const endDate   = new Date();
 
 function processData(data: any[]|any): void {
-  console.log(data)
+  const workedHours = TotalHours(data);
 
+  console.log(workedHours);
+
+  HoursToDo(new Date())
   // Join entries that are in the same day and return an array with worked hours per day
 }
 

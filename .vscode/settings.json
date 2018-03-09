@@ -8,6 +8,10 @@
             {
                 "match": "\\.*index.ts$",
                 "cmd": "node dist/index.js"
+            },
+            {
+                "match": "\\.*test.ts$",
+                "cmd": "yarn test"
             }
         ]
     }
