@@ -3,7 +3,7 @@ if (process.env.ENV && process.env.ENV.toLocaleLowerCase() === 'test') {
   // TODO: change "ENV" value in .env file
   require('console-stamp')(console, 'HH:MM:ss.l');
 }
-
+ 
 
 import './TogglPromise';
 import { TotalHours, HoursToDo } from './Logic';
@@ -46,11 +46,11 @@ const startDate = new Date(Date.UTC(2018, 2, 5))
 const endDate   = new Date();
 
 function processData(data: any[]|any): void {
-  const workedHours = TotalHours(data);
+  const workedHours: number = TotalHours(data);
 
   console.log(workedHours);
 
-  HoursToDo(new Date())
+  HoursToDo(new Date(Date.UTC(2018, 1, 5)), new Date())
   // Join entries that are in the same day and return an array with worked hours per day
 }
 

@@ -21,13 +21,42 @@ function TotalHours(data) {
 }
 exports.TotalHours = TotalHours;
 function BeginingOfWeek(date) {
-    // TODO Update hard coded date
-    return new Date(Date.UTC(2018, 2, 8));
+    const oneDay = 24 * 60 * 60 * 1000; // in milliseconds
+    let returnDate = date;
+    let weekDay = returnDate.getDay();
+    while (weekDay !== 1) {
+        if (weekDay === 0) {
+            returnDate.setDate(returnDate.getTime() + oneDay);
+            weekDay = returnDate.getDay();
+        }
+        else {
+            returnDate.setDate(returnDate.getTime() - oneDay);
+            weekDay = returnDate.getDay();
+        }
+    }
+    return returnDate;
 }
 exports.BeginingOfWeek = BeginingOfWeek;
 function EndOfWeek(date) {
-    // TODO Update hard coded date
-    return new Date(Date.UTC(2018, 2, 9));
+    const oneDay = 24 * 60 * 60 * 1000; // in milliseconds
+    let returnDate = date;
+    let weekDay = returnDate.getDay();
+    while (weekDay !== 5) {
+        console.log(weekDay);
+        if (weekDay === 0) {
+            returnDate.setDate(returnDate.getTime() - oneDay);
+            weekDay = returnDate.getDay();
+        }
+        else if (weekDay >= 1) {
+            returnDate.setDate(returnDate.getTime() + oneDay);
+            weekDay = returnDate.getDay();
+        }
+        else {
+            returnDate.setDate(returnDate.getTime() - oneDay);
+            weekDay = returnDate.getDay();
+        }
+    }
+    return returnDate;
 }
 exports.EndOfWeek = EndOfWeek;
 function DaysBetweenDates(start, end) {
@@ -36,12 +65,15 @@ function DaysBetweenDates(start, end) {
     return timeEnd - timeStart;
 }
 exports.DaysBetweenDates = DaysBetweenDates;
-function HoursToDo(startDate) {
-    const Weekstart = BeginingOfWeek(startDate);
-    const WeekEnd = EndOfWeek(startDate);
-    const days = DaysBetweenDates(Weekstart, WeekEnd) + 1;
-    const workingHours = 7.5 * days;
-    console.log(`workingHours: ${workingHours}`);
+function HoursToDo(start, end) {
+    const firstDay = BeginingOfWeek(start);
+    const lastDay = EndOfWeek(end);
+    const days = DaysBetweenDates(firstDay, lastDay) + 1;
+    const remainderDays = days % 7;
+    const wholeWeeks = (days - remainderDays) / 7;
+    const workingDays = wholeWeeks * 5 + remainderDays;
+    const workingHours = 7.5 * workingDays;
+    // console.log(`workingHours: ${workingHours}`);
     return workingHours;
 }
 exports.HoursToDo = HoursToDo;

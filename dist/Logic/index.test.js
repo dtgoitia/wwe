@@ -15,7 +15,8 @@ describe('Total hours', () => {
 });
 describe('Hours to do', () => {
     it('should return 7.5', () => {
-        chai_1.expect(7.5).to.equal(index_1.HoursToDo(new Date()));
+        // expect(7.5).to.equal(HoursToDo(new Date()));
+        chai_1.expect(7.5).to.equal(index_1.HoursToDo(new Date(Date.UTC(2018, 1, 5)), new Date()));
     });
 });
 //# sourceMappingURL=index.test.js.map

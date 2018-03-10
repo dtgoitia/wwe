@@ -16,7 +16,11 @@ describe('Total hours', () => {
 
 describe('Hours to do', () => {
   it('should return 7.5', () => {
-    expect(7.5).to.equal(HoursToDo(new Date()));
+    // expect(7.5).to.equal(HoursToDo(new Date()));
+    expect(7.5).to.equal(HoursToDo(
+      new Date(Date.UTC(2018, 1, 5)),
+      new Date()
+    ));
   });
 });
 

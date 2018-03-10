@@ -24,13 +24,39 @@ export function TotalHours(data: IEntry[]): number {
 }
 
 export function BeginingOfWeek(date: Date): Date {
-  // TODO Update hard coded date
-  return new Date(Date.UTC(2018, 2, 8));
+  const oneDay: number = 24 * 60 * 60 * 1000 // in milliseconds
+  let returnDate: Date = date;
+  let weekDay: number = returnDate.getDay();
+  while (weekDay !== 1) {
+    if ( weekDay === 0) {
+      returnDate.setDate(returnDate.getTime() + oneDay);
+      weekDay = returnDate.getDay();
+    } else {
+      returnDate.setDate(returnDate.getTime() - oneDay);
+      weekDay = returnDate.getDay();
+    }
+  }
+  return returnDate;
 }
 
 export function EndOfWeek(date: Date): Date {
-  // TODO Update hard coded date
-  return new Date(Date.UTC(2018, 2, 9));
+  const oneDay: number = 24 * 60 * 60 * 1000 // in milliseconds
+  let returnDate: Date = date;
+  let weekDay: number = returnDate.getDay();
+  while (weekDay !== 5) {
+    console.log(weekDay)
+    if ( weekDay === 0) {
+      returnDate.setDate(returnDate.getTime() - oneDay);
+      weekDay = returnDate.getDay();
+    } else if (weekDay >= 1){
+      returnDate.setDate(returnDate.getTime() + oneDay);
+      weekDay = returnDate.getDay();
+    } else {
+      returnDate.setDate(returnDate.getTime() - oneDay);
+      weekDay = returnDate.getDay();
+    }
+  }
+  return returnDate;
 }
 
 export function DaysBetweenDates(start: Date, end: Date): number {
@@ -39,12 +65,15 @@ export function DaysBetweenDates(start: Date, end: Date): number {
   return timeEnd - timeStart;
 }
 
-export function HoursToDo(startDate: Date): number {
-  const Weekstart: Date = BeginingOfWeek(startDate);
-  const WeekEnd: Date = EndOfWeek(startDate);
-  const days: number = DaysBetweenDates(Weekstart, WeekEnd) + 1;
-  const workingHours: number = 7.5 * days;
+export function HoursToDo(start: Date, end: Date): number {
+  const firstDay: Date = BeginingOfWeek(start);
+  const lastDay: Date = EndOfWeek(end);
+  const days: number = DaysBetweenDates(firstDay, lastDay) + 1;
+  const remainderDays: number = days % 7;
+  const wholeWeeks: number = (days - remainderDays) / 7;
+  const workingDays: number = wholeWeeks * 5 + remainderDays;
+  const workingHours: number = 7.5 * workingDays;
 
-  console.log(`workingHours: ${workingHours}`);
+  // console.log(`workingHours: ${workingHours}`);
   return workingHours;
 }

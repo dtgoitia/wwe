@@ -38,7 +38,7 @@ const endDate = new Date();
 function processData(data) {
     const workedHours = Logic_1.TotalHours(data);
     console.log(workedHours);
-    Logic_1.HoursToDo(new Date());
+    Logic_1.HoursToDo(new Date(Date.UTC(2018, 1, 5)), new Date());
     // Join entries that are in the same day and return an array with worked hours per day
 }
 const clients = TogglPromise_1.getClientsPromise(t)
