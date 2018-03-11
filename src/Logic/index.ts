@@ -27,12 +27,13 @@ export function BeginingOfWeek(date: Date): Date {
   const oneDay: number = 24 * 60 * 60 * 1000 // in milliseconds
   let returnDate: Date = date;
   let weekDay: number = returnDate.getDay();
+  let kk: any;
   while (weekDay !== 1) {
     if ( weekDay === 0) {
-      returnDate.setDate(returnDate.getTime() + oneDay);
+      returnDate.setTime(returnDate.getTime() + oneDay);
       weekDay = returnDate.getDay();
     } else {
-      returnDate.setDate(returnDate.getTime() - oneDay);
+      returnDate.setTime(returnDate.getTime() - oneDay);
       weekDay = returnDate.getDay();
     }
   }
@@ -44,15 +45,14 @@ export function EndOfWeek(date: Date): Date {
   let returnDate: Date = date;
   let weekDay: number = returnDate.getDay();
   while (weekDay !== 5) {
-    console.log(weekDay)
     if ( weekDay === 0) {
-      returnDate.setDate(returnDate.getTime() - oneDay);
+      returnDate.setTime(returnDate.getTime() - oneDay);
       weekDay = returnDate.getDay();
     } else if (weekDay >= 1){
-      returnDate.setDate(returnDate.getTime() + oneDay);
+      returnDate.setTime(returnDate.getTime() + oneDay);
       weekDay = returnDate.getDay();
     } else {
-      returnDate.setDate(returnDate.getTime() - oneDay);
+      returnDate.setTime(returnDate.getTime() - oneDay);
       weekDay = returnDate.getDay();
     }
   }

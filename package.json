@@ -2,7 +2,7 @@
   "name": "wwe",
   "version": "1.0.0",
   "description": "Simple CLI tool to know remaining working hours",
-  "main": "dist/index.js",
+  "main": "dist/debug.js",
   "scripts": {
     "start": "node ./dist/index.js",
     "execute": "node ./dist/index.js",
