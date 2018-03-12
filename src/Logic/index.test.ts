@@ -19,12 +19,11 @@ describe('Total hours', () => {
   });
 });
 
-xdescribe('Hours to do', () => {
-  it('should return 7.5', () => {
-    // expect(7.5).to.equal(HoursToDo(new Date()));
-    expect(7.5).to.equal(HoursToDo(
+describe('Hours to do', () => {
+  it('should return 187.5', () => {
+    expect(187.5).to.equal(HoursToDo(
       new Date(Date.UTC(2018, 1, 5)),
-      new Date()
+      new Date(Date.UTC(2018, 2, 11))
     ));
   });
 });
@@ -46,6 +45,6 @@ describe('End of week', () => {
   it('should return 5', () => expect(5).to.equal(EndOfWeek(new Date(Date.UTC(2018,0,4))).getDay()));
   it('should return 5', () => expect(5).to.equal(EndOfWeek(new Date(Date.UTC(2018,0,5))).getDay()));
   it('should return 5', () => expect(5).to.equal(EndOfWeek(new Date(Date.UTC(2018,0,6))).getDay()));
-  // it('should return 5', () => expect(5).to.equal(EndOfWeek(new Date(Date.UTC(2018,0,7))).getDay()));
+  it('should return 5', () => expect(5).to.equal(EndOfWeek(new Date(Date.UTC(2018,0,7))).getDay()));
 });
 

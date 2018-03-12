@@ -13,10 +13,9 @@ describe('Total hours', () => {
         chai_1.expect(1).to.equal(index_1.TotalHours(data));
     });
 });
-xdescribe('Hours to do', () => {
-    it('should return 7.5', () => {
-        // expect(7.5).to.equal(HoursToDo(new Date()));
-        chai_1.expect(7.5).to.equal(index_1.HoursToDo(new Date(Date.UTC(2018, 1, 5)), new Date()));
+describe('Hours to do', () => {
+    it('should return 187.5', () => {
+        chai_1.expect(187.5).to.equal(index_1.HoursToDo(new Date(Date.UTC(2018, 1, 5)), new Date(Date.UTC(2018, 2, 11))));
     });
 });
 describe('Beginning of week', () => {
@@ -35,6 +34,6 @@ describe('End of week', () => {
     it('should return 5', () => chai_1.expect(5).to.equal(index_1.EndOfWeek(new Date(Date.UTC(2018, 0, 4))).getDay()));
     it('should return 5', () => chai_1.expect(5).to.equal(index_1.EndOfWeek(new Date(Date.UTC(2018, 0, 5))).getDay()));
     it('should return 5', () => chai_1.expect(5).to.equal(index_1.EndOfWeek(new Date(Date.UTC(2018, 0, 6))).getDay()));
-    // it('should return 5', () => expect(5).to.equal(EndOfWeek(new Date(Date.UTC(2018,0,7))).getDay()));
+    it('should return 5', () => chai_1.expect(5).to.equal(index_1.EndOfWeek(new Date(Date.UTC(2018, 0, 7))).getDay()));
 });
 //# sourceMappingURL=index.test.js.map
