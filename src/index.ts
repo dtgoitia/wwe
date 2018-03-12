@@ -45,13 +45,15 @@ let taskArray;
 const startDate = new Date(Date.UTC(2018, 2, 5))
 const endDate   = new Date();
 
-function processData(data: any[]|any): void {
-  const workedHours: number = TotalHours(data);
 
-  console.log(workedHours);
-
-  HoursToDo(new Date(Date.UTC(2018, 1, 5)), new Date())
+function processData(data: any[]|any): number {
   // Join entries that are in the same day and return an array with worked hours per day
+  const workedHours: number = TotalHours(data);
+  console.log(`workedHours = ${workedHours}`);
+  
+  // const totalHoursToDo = HoursToDo(new Date(Date.UTC(2018, 1, 5)), new Date());
+  // console.log(`totalHoursToDo = ${totalHoursToDo}`);
+  return workedHours;
 }
 
 const clients = getClientsPromise(t)
@@ -65,21 +67,23 @@ const clients = getClientsPromise(t)
       .then(projectIdArray => projectIdArray.map(projectId => {
         getTimeEntriesPromise(t, startDate, endDate)
           .then(timeEntries => timeEntries.filter(timeEntry => {
-            return projectIdArray.includes(timeEntry.pid);
+            return projectId === timeEntry.pid;
+            // return projectIdArray.includes(timeEntry.pid);
           }).map(timeEntry => {
-            // console.log(timeEntry)
             return {
               date: timeEntry.start,
               duration: timeEntry.duration
             };
           }))
-          .then((data) => processData(data))
-          // .then((x) => console.log(x));
-      }))
-      // .then(() => console.log(projectIds));
-  })
-  // .then(x => console.log(x));
+          .then(data => TotalHours(data))
+      })
+      .map(x => console.log('lalala',x)))
+      // .reduce((totalWorkedAccumulated, hoursPerProject) => {
+      //   return totalWorkedAccumulated + hoursPerProject;
+      // })
+      // .map(x => console.log('lalala',x)))
+  });
 ;
 
 
-console.log(`End of the file reached at ${__filename}`);
+// console.log(`End of the file reached at ${__filename}`);

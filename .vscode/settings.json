@@ -6,8 +6,8 @@
                 "cmd": "tsc"
             },
             {
-                "match": "src/index.ts$",
-                "cmd": "node dist/index.js"
+                "match": "\\.*index.ts$",
+                "cmd": "yarn start"
             },
             {
                 "match": "\\.*test.ts$",

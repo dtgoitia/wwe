@@ -36,10 +36,12 @@ let taskArray;
 const startDate = new Date(Date.UTC(2018, 2, 5));
 const endDate = new Date();
 function processData(data) {
-    const workedHours = Logic_1.TotalHours(data);
-    console.log(workedHours);
-    Logic_1.HoursToDo(new Date(Date.UTC(2018, 1, 5)), new Date());
     // Join entries that are in the same day and return an array with worked hours per day
+    const workedHours = Logic_1.TotalHours(data);
+    console.log(`workedHours = ${workedHours}`);
+    // const totalHoursToDo = HoursToDo(new Date(Date.UTC(2018, 1, 5)), new Date());
+    // console.log(`totalHoursToDo = ${totalHoursToDo}`);
+    return workedHours;
 }
 const clients = TogglPromise_1.getClientsPromise(t)
     .then(clientsArray => clientsArray.filter(client => client.name === 'Software Imaging'))
@@ -51,18 +53,22 @@ const clients = TogglPromise_1.getClientsPromise(t)
         .then(projectIdArray => projectIdArray.map(projectId => {
         TogglPromise_1.getTimeEntriesPromise(t, startDate, endDate)
             .then(timeEntries => timeEntries.filter(timeEntry => {
-            return projectIdArray.includes(timeEntry.pid);
+            return projectId === timeEntry.pid;
+            // return projectIdArray.includes(timeEntry.pid);
         }).map(timeEntry => {
-            // console.log(timeEntry)
             return {
                 date: timeEntry.start,
                 duration: timeEntry.duration
             };
         }))
-            .then((data) => processData(data));
-        // .then((x) => console.log(x));
-    }));
-    // .then(() => console.log(projectIds));
+            .then(data => Logic_1.TotalHours(data));
+    })
+        .map(x => console.log('lalala', x)));
+    // .reduce((totalWorkedAccumulated, hoursPerProject) => {
+    //   return totalWorkedAccumulated + hoursPerProject;
+    // })
+    // .map(x => console.log('lalala',x)))
 });
-console.log(`End of the file reached at ${__filename}`);
+;
+// console.log(`End of the file reached at ${__filename}`);
 //# sourceMappingURL=index.js.map
