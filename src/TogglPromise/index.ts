@@ -1,7 +1,7 @@
 import { IProject } from './IProject';
 import { IClient } from './IClient';
 
-export function getProjectName(togglClient: any, projectId: string) : Promise<IProject|Error> {
+export function getProjectName(togglClient: any, projectId: string) : Promise<IProject> {
   return new Promise((resolve, reject) => {
     togglClient.getProjectData(projectId, (err: Error, projectData: any) => {
       if (!err) {

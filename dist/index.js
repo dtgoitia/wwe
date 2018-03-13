@@ -1,4 +1,12 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 require('dotenv').config();
 if (process.env.ENV && process.env.ENV.toLocaleLowerCase() === 'test') {
@@ -43,32 +51,23 @@ function processData(data) {
     // console.log(`totalHoursToDo = ${totalHoursToDo}`);
     return workedHours;
 }
-const clients = TogglPromise_1.getClientsPromise(t)
-    .then(clientsArray => clientsArray.filter(client => client.name === 'Software Imaging'))
-    .then(clientsArray => clientsArray.length === 1 ? clientsArray[0] : new Error('more than one client is called "Software Imaging"'))
-    .then(client => client.id)
-    .then(clientId => {
-    TogglPromise_1.getClientProjectsPromise(t, clientId, true)
-        .then(projectsArray => projectsArray.map(project => project.id))
-        .then(projectIdArray => projectIdArray.map(projectId => {
-        TogglPromise_1.getTimeEntriesPromise(t, startDate, endDate)
-            .then(timeEntries => timeEntries.filter(timeEntry => {
-            return projectId === timeEntry.pid;
-            // return projectIdArray.includes(timeEntry.pid);
-        }).map(timeEntry => {
-            return {
-                date: timeEntry.start,
-                duration: timeEntry.duration
-            };
-        }))
-            .then(data => Logic_1.TotalHours(data));
-    })
-        .map(x => console.log('lalala', x)));
-    // .reduce((totalWorkedAccumulated, hoursPerProject) => {
-    //   return totalWorkedAccumulated + hoursPerProject;
-    // })
-    // .map(x => console.log('lalala',x)))
-});
-;
-// console.log(`End of the file reached at ${__filename}`);
+(function () {
+    return __awaiter(this, void 0, void 0, function* () {
+        const clientsArray = yield TogglPromise_1.getClientsPromise(t);
+        const clientId = clientsArray.filter(client => {
+            return client.name === 'Software Imaging';
+        })[0]
+            .id;
+        const projectArray = yield TogglPromise_1.getClientProjectsPromise(t, clientId, true);
+        const projectIdArray = projectArray.map(project => project.id);
+        const entryArray = yield TogglPromise_1.getTimeEntriesPromise(t, startDate, endDate);
+        const workedSeconds = entryArray
+            .filter(timeEntry => projectIdArray.includes(timeEntry.pid))
+            .map(timeEntry => timeEntry.duration)
+            .reduce((total, entry) => total + entry);
+        const workedHours = Logic_1.SecondsToHours(workedSeconds);
+        console.log(`workedSeconds = ${workedSeconds}`);
+        console.log(`workedHours = ${workedHours}`);
+    });
+})();
 //# sourceMappingURL=index.js.map

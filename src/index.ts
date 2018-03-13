@@ -6,12 +6,13 @@ if (process.env.ENV && process.env.ENV.toLocaleLowerCase() === 'test') {
  
 
 import './TogglPromise';
-import { TotalHours, HoursToDo } from './Logic';
+import { TotalHours, HoursToDo, SecondsToHours } from './Logic';
 import {
   getClientsPromise,
   getClientProjectsPromise,
   // getProjectTasksPromise
-  getTimeEntriesPromise
+  getTimeEntriesPromise,
+  getProjectNames
 } from './TogglPromise';
 
 const TogglClient = require('toggl-api');
@@ -56,34 +57,22 @@ function processData(data: any[]|any): number {
   return workedHours;
 }
 
-const clients = getClientsPromise(t)
-  // .then(clientsArray => clientsArray.map(client => client))  // Return all clients
-  .then(clientsArray => clientsArray.filter(client => client.name === 'Software Imaging'))
-  .then(clientsArray => clientsArray.length === 1 ? clientsArray[0] : new Error('more than one client is called "Software Imaging"'))
-  .then(client => client.id)
-  .then(clientId => {
-    getClientProjectsPromise(t, clientId, true)
-      .then(projectsArray => projectsArray.map(project => project.id))
-      .then(projectIdArray => projectIdArray.map(projectId => {
-        getTimeEntriesPromise(t, startDate, endDate)
-          .then(timeEntries => timeEntries.filter(timeEntry => {
-            return projectId === timeEntry.pid;
-            // return projectIdArray.includes(timeEntry.pid);
-          }).map(timeEntry => {
-            return {
-              date: timeEntry.start,
-              duration: timeEntry.duration
-            };
-          }))
-          .then(data => TotalHours(data))
-      })
-      .map(x => console.log('lalala',x)))
-      // .reduce((totalWorkedAccumulated, hoursPerProject) => {
-      //   return totalWorkedAccumulated + hoursPerProject;
-      // })
-      // .map(x => console.log('lalala',x)))
-  });
-;
-
-
-// console.log(`End of the file reached at ${__filename}`);
+(async function () {
+  const clientsArray = await getClientsPromise(t)
+  const clientId = clientsArray.filter(client => {
+    return client.name === 'Software Imaging'
+  })
+    [0]
+    .id;
+  const projectArray = await getClientProjectsPromise(t, clientId, true);
+  const projectIdArray = projectArray.map(project => project.id);
+  const entryArray = await getTimeEntriesPromise(t, startDate, endDate);
+  const workedSeconds = entryArray
+    .filter(timeEntry => projectIdArray.includes(timeEntry.pid) )
+    .map(timeEntry => timeEntry.duration)
+    .reduce((total, entry) => total + entry);
+  const workedHours = SecondsToHours(workedSeconds);
+  console.log(`workedSeconds = ${workedSeconds}`);
+  console.log(`workedHours = ${workedHours}`);
+  
+})()
