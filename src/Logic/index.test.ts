@@ -7,10 +7,11 @@ import {
   BeginingOfWeek,
   EndOfWeek
 } from './index';
+import { IEntry } from './../TogglPromise/IEntry';
 
 describe('Total hours', () => {
   it('should return 1', () => {
-    const data = [
+    const data: IEntry[] = [
       { date: new Date(), duration: 3100 },
       { date: new Date(), duration: 200 },
       { date: new Date(), duration: 300 }

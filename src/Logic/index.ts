@@ -1,7 +1,4 @@
-interface IEntry {
-  duration: number;
-  // TODO move this to a separate file
-}
+import { IEntry } from './../TogglPromise/IEntry';
 
 export function SecondsToHours(sec: number): number{
   return sec/3600;

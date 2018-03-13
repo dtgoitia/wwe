@@ -1,5 +1,6 @@
 import { IProject } from './IProject';
 import { IClient } from './IClient';
+import { IEntry } from './IEntry';
 
 export function getProjectName(togglClient: any, projectId: string) : Promise<IProject> {
   return new Promise((resolve, reject) => {
@@ -18,7 +19,7 @@ export function getProjectName(togglClient: any, projectId: string) : Promise<IP
   });
 }
 
-export async function getProjectNames(projectIds: string[], togglClient: any) {
+export async function getProjectNames(projectIds: string[], togglClient: any) : Promise<IProject[]> {
   let projectNames: IProject[] = [];
 
   const pendingPromises = projectIds.map((projectId: string) => {
@@ -52,26 +53,13 @@ export function getClientProjectsPromise(toggleClient:any, clientId: number|stri
   });
 }
 
-// export function getProjectTasksPromise(togglClient:any, projectId: number|string): Promise<any|Error> {
-//   return new Promise((resolve, reject) => {
-//     console.log('getProjectTasksPromise called!')
-//     togglClient.getProjectTasks(projectId, (err: Error, tasks: any) => { // TODO Change task type to ITask
-//       if (!err) {
-//         resolve(tasks);
-//       } else {
-//         reject(new Error(err.message));
-//       }
-//     });
-//   });
-// }
-
 export function getTimeEntriesPromise(
   togglClient:any,
   startDate?:string|number|Date,
   endDate?:string|number|Date
 ): Promise<any|Error> {
   return new Promise((resolve, reject) => {
-    togglClient.getTimeEntries(startDate, endDate, (err, timeEntries) => {
+    togglClient.getTimeEntries(startDate, endDate, (err: Error, timeEntries: any) => {
       if (!err) {
         resolve(timeEntries);
       } else {

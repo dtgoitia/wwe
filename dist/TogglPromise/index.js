@@ -62,18 +62,6 @@ function getClientProjectsPromise(toggleClient, clientId, active) {
     });
 }
 exports.getClientProjectsPromise = getClientProjectsPromise;
-// export function getProjectTasksPromise(togglClient:any, projectId: number|string): Promise<any|Error> {
-//   return new Promise((resolve, reject) => {
-//     console.log('getProjectTasksPromise called!')
-//     togglClient.getProjectTasks(projectId, (err: Error, tasks: any) => { // TODO Change task type to ITask
-//       if (!err) {
-//         resolve(tasks);
-//       } else {
-//         reject(new Error(err.message));
-//       }
-//     });
-//   });
-// }
 function getTimeEntriesPromise(togglClient, startDate, endDate) {
     return new Promise((resolve, reject) => {
         togglClient.getTimeEntries(startDate, endDate, (err, timeEntries) => {
