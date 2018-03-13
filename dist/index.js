@@ -18,39 +18,7 @@ const Logic_1 = require("./Logic");
 const TogglPromise_1 = require("./TogglPromise");
 const TogglClient = require('toggl-api');
 const t = new TogglClient({ apiToken: process.env.TOGGLE_TOKEN });
-/*
-ASYNC
-  getClients()
-  Filter by name and get id value.
-
-  getClientProjects(clientId)
-  get array with all of projectId of the client
-
-ASYNC
-  getTimeEntries()
-  await for projectId array
-  filter all the tasks matching projectId
-  calculate the total amount hours spend in the client
-
-ASYNC
-  calculate theoretical hours you should have worked until today
-
-TogglApi docs:
-  http://7eggs.github.io/node-toggl-api/TogglClient.html
-*/
-// function selectClient;
-let projectIds;
-let taskArray;
-const startDate = new Date(Date.UTC(2018, 2, 5));
-const endDate = new Date();
-function processData(data) {
-    // Join entries that are in the same day and return an array with worked hours per day
-    const workedHours = Logic_1.TotalHours(data);
-    console.log(`workedHours = ${workedHours}`);
-    // const totalHoursToDo = HoursToDo(new Date(Date.UTC(2018, 1, 5)), new Date());
-    // console.log(`totalHoursToDo = ${totalHoursToDo}`);
-    return workedHours;
-}
+function x(data) { return null; }
 (function () {
     return __awaiter(this, void 0, void 0, function* () {
         const clientsArray = yield TogglPromise_1.getClientsPromise(t);
@@ -60,14 +28,20 @@ function processData(data) {
             .id;
         const projectArray = yield TogglPromise_1.getClientProjectsPromise(t, clientId, true);
         const projectIdArray = projectArray.map(project => project.id);
+        const startDate = new Date(Date.UTC(2018, 1, 5));
+        const endDate = new Date();
         const entryArray = yield TogglPromise_1.getTimeEntriesPromise(t, startDate, endDate);
         const workedSeconds = entryArray
             .filter(timeEntry => projectIdArray.includes(timeEntry.pid))
             .map(timeEntry => timeEntry.duration)
             .reduce((total, entry) => total + entry);
         const workedHours = Logic_1.SecondsToHours(workedSeconds);
-        console.log(`workedSeconds = ${workedSeconds}`);
-        console.log(`workedHours = ${workedHours}`);
+        console.log(`done = ${workedHours.toFixed(2)}`);
+        const totalHoursToDo = Logic_1.HoursToDo(startDate, endDate);
+        console.log(`todo = ${totalHoursToDo.toFixed(2)}`);
+        console.log(`--------------------`);
+        const diff = workedHours - totalHoursToDo;
+        console.log(`diff = ${diff.toFixed(2)}\n\n.`);
     });
 })();
 //# sourceMappingURL=index.js.map

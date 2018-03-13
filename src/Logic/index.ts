@@ -7,10 +7,6 @@ export function SecondsToHours(sec: number): number{
   return sec/3600;
 }
 
-export function MillisecondsToHours(sec: number): number{
-  return sec/3600000;
-}
-
 export function MillisecondsToDays(sec: number): number{
   return sec/(24*3600*1000);
 }
@@ -55,15 +51,25 @@ export function EndOfWeek(date: Date): Date {
   return returnDate;
 }
 
-export function DaysBetweenDates(start: Date, end: Date): number {
-  const timeStart: number = MillisecondsToDays(start.getTime());
-  const timeEnd: number = MillisecondsToDays(end.getTime());
+export function RoundToDay(date: Date): Date {
+  return new Date(
+    Date.UTC(
+      date.getUTCFullYear(),
+      date.getUTCMonth(),
+      date.getUTCDate()
+    )
+  );
+}
+
+function DaysBetweenDates(start: Date, end: Date): number {
+  const timeStart: number = MillisecondsToDays(RoundToDay(start).getTime());
+  const timeEnd: number = MillisecondsToDays(RoundToDay(end).getTime());
   return timeEnd - timeStart;
 }
 
 export function HoursToDo(start: Date, end: Date): number {
   const firstDay: Date = BeginingOfWeek(start);
-  const lastDay: Date = EndOfWeek(end);
+  const lastDay: Date = end;
   const days: number = DaysBetweenDates(firstDay, lastDay) + 1;
   const remainderDays: number = days % 7;
   const wholeWeeks: number = (days - remainderDays) / 7;
