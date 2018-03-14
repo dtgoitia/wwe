@@ -1,7 +1,7 @@
 require('dotenv').config();
  
 import './TogglPromise';
-import { TotalHours, HoursToDo, SecondsToHours } from './Logic';
+import { TotalHours, HoursToDo, SecondsToHours, SecondsBetweenDates } from './Logic';
 import { getClientsPromise, getClientProjectsPromise, getTimeEntriesPromise,
   getProjectNames } from './TogglPromise';
 import { IClient } from './TogglPromise/IClient';
@@ -29,7 +29,18 @@ function x(data: any) { return null; }
   const entryArray = await getTimeEntriesPromise(t, startDate, endDate);
   const workedSeconds = entryArray
     .filter((timeEntry: IEntry) => projectIdArray.includes(timeEntry.pid) )
-    .map((timeEntry: IEntry) => timeEntry.duration)
+    .map((timeEntry: IEntry) => {
+      const duration: number = timeEntry.duration;
+      if (duration > 0) {
+        return duration;
+      } else {
+        const now: Date = new Date();
+        const startString: string = timeEntry.start === undefined ? '' : timeEntry.start;
+        const start: Date = new Date(startString);
+        return SecondsBetweenDates(start, now);
+      }
+        
+    })
     .reduce((total: number, entry: number) => total + entry);
   const workedHours = SecondsToHours(workedSeconds);
   const totalHoursToDo = HoursToDo(startDate, endDate);
@@ -37,7 +48,7 @@ function x(data: any) { return null; }
   let diffString: string;
   diff > 0
     ? diffString = '+' + diff.toFixed(2)
-    : diffString = '-' + diff.toFixed(2)
+    : diffString = diff.toFixed(2)
   
   console.log(`  done = ${workedHours.toFixed(2)}`);
   console.log(`  todo = ${totalHoursToDo.toFixed(2)}`);

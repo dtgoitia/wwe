@@ -58,6 +58,12 @@ export function RoundToDay(date: Date): Date {
   );
 }
 
+export function SecondsBetweenDates(start: Date, end: Date): number {
+  const timeStart: number = start.getTime() * 1000;
+  const timeEnd: number = end.getTime() * 1000;
+  return timeEnd - timeStart;
+}
+
 function DaysBetweenDates(start: Date, end: Date): number {
   const timeStart: number = MillisecondsToDays(RoundToDay(start).getTime());
   const timeEnd: number = MillisecondsToDays(RoundToDay(end).getTime());

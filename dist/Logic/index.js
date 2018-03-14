@@ -54,6 +54,12 @@ function RoundToDay(date) {
     return new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
 }
 exports.RoundToDay = RoundToDay;
+function SecondsBetweenDates(start, end) {
+    const timeStart = start.getTime() * 1000;
+    const timeEnd = end.getTime() * 1000;
+    return timeEnd - timeStart;
+}
+exports.SecondsBetweenDates = SecondsBetweenDates;
 function DaysBetweenDates(start, end) {
     const timeStart = MillisecondsToDays(RoundToDay(start).getTime());
     const timeEnd = MillisecondsToDays(RoundToDay(end).getTime());

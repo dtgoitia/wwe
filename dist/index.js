@@ -29,7 +29,18 @@ function x(data) { return null; }
         const entryArray = yield TogglPromise_1.getTimeEntriesPromise(t, startDate, endDate);
         const workedSeconds = entryArray
             .filter((timeEntry) => projectIdArray.includes(timeEntry.pid))
-            .map((timeEntry) => timeEntry.duration)
+            .map((timeEntry) => {
+            const duration = timeEntry.duration;
+            if (duration > 0) {
+                return duration;
+            }
+            else {
+                const now = new Date();
+                const startString = timeEntry.start === undefined ? '' : timeEntry.start;
+                const start = new Date(startString);
+                return Logic_1.SecondsBetweenDates(start, now);
+            }
+        })
             .reduce((total, entry) => total + entry);
         const workedHours = Logic_1.SecondsToHours(workedSeconds);
         const totalHoursToDo = Logic_1.HoursToDo(startDate, endDate);
@@ -37,7 +48,7 @@ function x(data) { return null; }
         let diffString;
         diff > 0
             ? diffString = '+' + diff.toFixed(2)
-            : diffString = '-' + diff.toFixed(2);
+            : diffString = diff.toFixed(2);
         console.log(`  done = ${workedHours.toFixed(2)}`);
         console.log(`  todo = ${totalHoursToDo.toFixed(2)}`);
         console.log(`----------------`);
