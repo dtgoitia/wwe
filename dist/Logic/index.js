@@ -55,8 +55,8 @@ function RoundToDay(date) {
 }
 exports.RoundToDay = RoundToDay;
 function SecondsBetweenDates(start, end) {
-    const timeStart = start.getTime() * 1000;
-    const timeEnd = end.getTime() * 1000;
+    const timeStart = start.getTime() / 1000;
+    const timeEnd = end.getTime() / 1000;
     return timeEnd - timeStart;
 }
 exports.SecondsBetweenDates = SecondsBetweenDates;

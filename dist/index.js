@@ -30,16 +30,13 @@ function x(data) { return null; }
         const workedSeconds = entryArray
             .filter((timeEntry) => projectIdArray.includes(timeEntry.pid))
             .map((timeEntry) => {
-            const duration = timeEntry.duration;
-            if (duration > 0) {
-                return duration;
-            }
-            else {
-                const now = new Date();
+            if (!timeEntry.hasOwnProperty("stop")) {
                 const startString = timeEntry.start === undefined ? '' : timeEntry.start;
                 const start = new Date(startString);
+                const now = new Date();
                 return Logic_1.SecondsBetweenDates(start, now);
             }
+            return timeEntry.duration;
         })
             .reduce((total, entry) => total + entry);
         const workedHours = Logic_1.SecondsToHours(workedSeconds);

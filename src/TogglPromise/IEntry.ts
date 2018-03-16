@@ -3,4 +3,5 @@ export interface IEntry {
   duration: number;
   pid?: number;
   start?: string;
+  stop?: string;
 }
