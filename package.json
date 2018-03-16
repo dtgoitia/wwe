@@ -8,8 +8,22 @@
     "build": "tsc && npm run shebang && chmod +x ./dist/index.js",
     "cli": "./dist/index.js",
     "dev": "tsc -w",
+    "dist": "tsc",
     "shebang": "echo '#! /usr/bin/env node' | cat - ./dist/index.js > temp && mv temp ./dist/index.js",
-    "test": "mocha -r ts-node/register src/**/*.test.ts"
+    "test": "nyc mocha -r ts-node/register src/**/*.test.ts"
+  },
+  "nyc": {
+    "extension": [
+      ".ts"
+    ],
+    "exclude": [
+      "**/*.d.ts",
+      "**/*.js"
+    ],
+    "reporter": [
+      "text"
+    ],
+    "all": true  
   },
   "repository": "git@github.com:dtgoitia/wwe.git",
   "author": "David Torralba Goitia <david.torralba.goitia@gmail.com>",
@@ -21,6 +35,7 @@
     "chai": "^4.1.2",
     "console-stamp": "^0.2.6",
     "mocha": "^5.0.4",
+    "nyc": "^11.6.0",
     "ts-node": "^5.0.1",
     "typescript": "^2.7.2"
   },

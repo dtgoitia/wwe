@@ -1,3 +1,13 @@
+# Package management
 node_modules
-.env
 yarn-error.log
+
+# Sensitive data
+.env
+
+# Release folder
+dist
+
+# Code coverage files
+.nyc_output
+.coverage
