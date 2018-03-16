@@ -65,6 +65,13 @@ function DaysBetweenDates(start, end) {
     const timeEnd = MillisecondsToDays(RoundToDay(end).getTime());
     return timeEnd - timeStart;
 }
+function FormatHours(h) {
+    const minInHours = h % 1;
+    const hours = h - minInHours;
+    const mins = minInHours * 60;
+    return `${hours}:${mins.toFixed(0)}`;
+}
+exports.FormatHours = FormatHours;
 function HoursToDo(start, end) {
     const firstDay = BeginingOfWeek(start);
     const lastDay = end;

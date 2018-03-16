@@ -70,6 +70,12 @@ function DaysBetweenDates(start: Date, end: Date): number {
   return timeEnd - timeStart;
 }
 
+export function FormatHours(h: number): string {
+  const minInHours: number = h % 1;
+  const hours: number = h - minInHours;
+  const mins: number = minInHours * 60
+  return `${hours}:${mins.toFixed(0)}`;
+}
 export function HoursToDo(start: Date, end: Date): number {
   const firstDay: Date = BeginingOfWeek(start);
   const lastDay: Date = end;
