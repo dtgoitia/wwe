@@ -51,5 +51,5 @@ function x(data: any) { return null; }
   console.log(`  done = ${workedHours.toFixed(2)}`);
   console.log(`  todo = ${totalHoursToDo.toFixed(2)}`);
   console.log(`----------------`);
-  console.log(`          ${diffString}  ${FormatHours(diff)}\n\n.`);
+  console.log(`          ${diffString}  ${FormatHours(Math.abs(diff))}\n\n.`);
 })()

@@ -49,7 +49,7 @@ function x(data) { return null; }
         console.log(`  done = ${workedHours.toFixed(2)}`);
         console.log(`  todo = ${totalHoursToDo.toFixed(2)}`);
         console.log(`----------------`);
-        console.log(`          ${diffString}  ${Logic_1.FormatHours(diff)}\n\n.`);
+        console.log(`          ${diffString}  ${Logic_1.FormatHours(Math.abs(diff))}\n\n.`);
     });
 })();
 //# sourceMappingURL=index.js.map
