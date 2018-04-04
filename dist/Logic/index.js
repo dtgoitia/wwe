@@ -72,13 +72,13 @@ function FormatHours(h) {
     return `${hours}:${mins.toFixed(0)}`;
 }
 exports.FormatHours = FormatHours;
-function HoursToDo(start, end) {
+function HoursToDo(start, end, excludedDays) {
     const firstDay = BeginingOfWeek(start);
     const lastDay = end;
     const days = DaysBetweenDates(firstDay, lastDay) + 1;
     const remainderDays = days % 7;
     const wholeWeeks = (days - remainderDays) / 7;
-    const workingDays = wholeWeeks * 5 + remainderDays;
+    const workingDays = wholeWeeks * 5 + remainderDays - excludedDays;
     const workingHours = 7.5 * workingDays;
     // console.log(`workingHours: ${workingHours}`);
     return workingHours;

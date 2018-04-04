@@ -1,5 +1,6 @@
 require('dotenv').config();
- 
+
+import fs = require('fs');
 import './TogglPromise';
 import { TotalHours, HoursToDo, SecondsToHours, SecondsBetweenDates, FormatHours } from './Logic';
 import { getClientsPromise, getClientProjectsPromise, getTimeEntriesPromise,
@@ -12,6 +13,12 @@ const TogglClient = require('toggl-api');
 const t = new TogglClient({ apiToken: process.env.TOGGLE_TOKEN })
 
 function x(data: any) { return null; }
+
+function importExcludedDays(): number {
+  const fileHandler = fs.readFileSync('./excludedDays.json', 'utf8');
+  const obj = JSON.parse(fileHandler);
+  return obj["excludedDays"].length;
+}
 
 (async function () {
   const clientsArray = await getClientsPromise(t)
@@ -41,7 +48,8 @@ function x(data: any) { return null; }
     })
     .reduce((total: number, entry: number) => total + entry);
   const workedHours = SecondsToHours(workedSeconds);
-  const totalHoursToDo = HoursToDo(startDate, endDate);
+  const excludedDays = importExcludedDays();
+  const totalHoursToDo = HoursToDo(startDate, endDate, excludedDays);
   const diff = workedHours - totalHoursToDo;
   let diffString: string;
   diff > 0

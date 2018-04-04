@@ -24,7 +24,8 @@ describe('Hours to do', () => {
   it('should return 187.5', () => {
     expect(187.5).to.equal(HoursToDo(
       new Date(Date.UTC(2018, 1, 5)),
-      new Date(Date.UTC(2018, 2, 11))
+      new Date(Date.UTC(2018, 2, 11)),
+      0 // excluded days
     ));
   });
 });

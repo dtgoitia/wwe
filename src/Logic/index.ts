@@ -76,13 +76,13 @@ export function FormatHours(h: number): string {
   const mins: number = minInHours * 60
   return `${hours}:${mins.toFixed(0)}`;
 }
-export function HoursToDo(start: Date, end: Date): number {
+export function HoursToDo(start: Date, end: Date, excludedDays: number): number {
   const firstDay: Date = BeginingOfWeek(start);
   const lastDay: Date = end;
   const days: number = DaysBetweenDates(firstDay, lastDay) + 1;
   const remainderDays: number = days % 7;
   const wholeWeeks: number = (days - remainderDays) / 7;
-  const workingDays: number = wholeWeeks * 5 + remainderDays;
+  const workingDays: number = wholeWeeks * 5 + remainderDays - excludedDays;
   const workingHours: number = 7.5 * workingDays;
 
   // console.log(`workingHours: ${workingHours}`);

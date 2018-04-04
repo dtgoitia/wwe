@@ -9,12 +9,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 require('dotenv').config();
+const fs = require("fs");
 require("./TogglPromise");
 const Logic_1 = require("./Logic");
 const TogglPromise_1 = require("./TogglPromise");
 const TogglClient = require('toggl-api');
 const t = new TogglClient({ apiToken: process.env.TOGGLE_TOKEN });
 function x(data) { return null; }
+function importExcludedDays() {
+    const fileHandler = fs.readFileSync('./excludedDays.json', 'utf8');
+    const obj = JSON.parse(fileHandler);
+    return obj["excludedDays"].length;
+}
 (function () {
     return __awaiter(this, void 0, void 0, function* () {
         const clientsArray = yield TogglPromise_1.getClientsPromise(t);
@@ -40,7 +46,8 @@ function x(data) { return null; }
         })
             .reduce((total, entry) => total + entry);
         const workedHours = Logic_1.SecondsToHours(workedSeconds);
-        const totalHoursToDo = Logic_1.HoursToDo(startDate, endDate);
+        const excludedDays = importExcludedDays();
+        const totalHoursToDo = Logic_1.HoursToDo(startDate, endDate, excludedDays);
         const diff = workedHours - totalHoursToDo;
         let diffString;
         diff > 0
