@@ -69,7 +69,9 @@ function FormatHours(h) {
     const minInHours = h % 1;
     const hours = h - minInHours;
     const mins = minInHours * 60;
-    return `${hours}:${mins.toFixed(0)}`;
+    const minsString = mins.toFixed(0);
+    const minsStringAdjusted = minsString.length == 1 ? '0' + minsString : minsString;
+    return `${hours}:${minsStringAdjusted}`;
 }
 exports.FormatHours = FormatHours;
 function HoursToDo(start, end, excludedDays) {

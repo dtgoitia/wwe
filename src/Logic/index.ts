@@ -74,7 +74,9 @@ export function FormatHours(h: number): string {
   const minInHours: number = h % 1;
   const hours: number = h - minInHours;
   const mins: number = minInHours * 60
-  return `${hours}:${mins.toFixed(0)}`;
+  const minsString = mins.toFixed(0);
+  const minsStringAdjusted = minsString.length == 1 ? '0' + minsString : minsString;
+  return `${hours}:${minsStringAdjusted}`;
 }
 export function HoursToDo(start: Date, end: Date, excludedDays: number): number {
   const firstDay: Date = BeginingOfWeek(start);
