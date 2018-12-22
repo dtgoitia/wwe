@@ -23,7 +23,7 @@
     "reporter": [
       "text"
     ],
-    "all": true  
+    "all": true
   },
   "repository": "git@github.com:dtgoitia/wwe.git",
   "author": "David Torralba Goitia <david.torralba.goitia@gmail.com>",
